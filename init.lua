@@ -34,3 +34,31 @@ minetest.register_chatcommand("report", {
 		end
 	end
 })
+
+
+if minetest.get_modpath("sfinv_buttons") ~= nil then
+	sfinv_buttons.register_button("report", {
+		image = "report.png",
+		tooltip = S("Report message for admins"),
+		title = S("Report"),
+		action = report.get_formspec,
+	})
+end
+
+report = {}
+
+function report.get_formspec(name)
+   local text = "Report message for admins"
+    local formspec = {
+       "size[6,3.476]",
+      "real_coordinates[true]",
+       "label[0.375,0.5;", minetest.formspec_escape(text), "]",
+       "field[0.375,1.25;5.25,0.8;number;Number;]",
+      "button[1.5,2.3;3,0.8;guess;Guess]"
+   }
+
+    -- table.concat is faster than string concatenation - `..`
+    return table.concat(formspec, "")
+end
+
+
